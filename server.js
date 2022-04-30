@@ -17,11 +17,17 @@ app.use(cors());
 const contactRoute = require("./routes/contactRoute");
 const authRoute = require("./routes/AuthRoute");
 const ShipmentRoute = require("./routes/ShipmentRoute");
+const newsletterRoute = require("./routes/newsletterRoute");
+const paymentRoute = require("./routes/paymentRoute");
+const khaltiRoute = require("./routes/KhaltiRoute");
 
 //Using Routes
 app.use("/api/v1", contactRoute);
 app.use("/api/v1", authRoute);
 app.use("/api/v1", ShipmentRoute);
+app.use("/api/v1", newsletterRoute);
+app.use("/api/v1", paymentRoute);
+app.use("/api/v1", khaltiRoute);
 
 app.get("/", (req, res) => {
   res.send("Home Page");

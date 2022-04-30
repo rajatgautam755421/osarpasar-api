@@ -19,7 +19,6 @@ const userSchema = Schema(
     },
     hashedPassword: {
       type: String,
-      //   required: [true, "Password of user is required"],
       unique: true,
     },
     role: {

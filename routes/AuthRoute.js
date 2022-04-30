@@ -3,6 +3,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 
+//All Users
+
+router.get("/users/all", async (req, res) => {
+  try {
+    const response = await UserModel.find({});
+    res.json(response);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 //Create A User
 router.post("/register", async (req, res) => {
   const isAUser = await UserModel.findOne({ email: req.body.email });
@@ -12,7 +23,7 @@ router.post("/register", async (req, res) => {
       const newUser = await requestUser.save();
       res.status(201).json({
         success: true,
-        user: newUser,
+        message: "Registration Successfull",
       });
     } catch (error) {
       res.status(500).json({
@@ -39,7 +50,7 @@ router.post("/login", async (req, res) => {
     req.body.password,
     presentUser.hashedPassword
   );
-  if (!validPassword) return res.status(400).json("Password is incorrect");
+  if (!validPassword) return res.status(400).json("Password Is Incorrect");
 
   try {
     await new UserModel({
