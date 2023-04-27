@@ -1,14 +1,14 @@
+const asyncHandler = require("../middlewares/asyncHandler");
 const ContactModel = require("../models/ContactModel");
 const router = require("express").Router();
 
-router.post("/contact", async (req, res) => {
-  try {
+router.post(
+  "/contact",
+  asyncHandler(async (req, res) => {
     const response = await ContactModel.create(req.body);
-    res.json(response);
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+    res.json({ success: true, message: response });
+  })
+);
 
 router.get("/contact/all", async (req, res) => {
   try {

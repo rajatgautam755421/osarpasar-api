@@ -1,13 +1,19 @@
 const { connect } = require("mongoose");
+const { createSeedAdmin } = require("../common/generalHelpers");
 require("dotenv").config();
 
-connect(
-  "mongodb+srv://amanmongodb123:amanmongodb123@cluster0.raequ.mongodb.net/NihareekaCollege",
-  (err) => {
-    if (!err) {
-      console.log("connected to database 😂");
-    } else {
-      console.log("No connection 😒");
+const dbConnection = async () => {
+  await connect(
+    "mongodb+srv://amanmongodb123:amanmongodb123@cluster0.raequ.mongodb.net/osar-pasar",
+    (err) => {
+      if (!err) {
+        console.log("connected to database 😂");
+        createSeedAdmin();
+      } else {
+        console.log(err.message);
+      }
     }
-  }
-);
+  );
+};
+
+module.exports = { dbConnection };

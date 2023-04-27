@@ -1,41 +1,38 @@
-const { model, Schema } = require("mongoose");
-const bcrypt = require("bcryptjs");
+const { Schema, model } = require("mongoose");
+const { USER_ROLE, SENDER_ROLE } = require("../common/Constants");
 
-const userSchema = Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: [true, "Email of user is required"],
-      trim: true,
-      unique: true,
-    },
-    unHashedPassword: {
-      type: String,
-    },
-    hashedPassword: {
-      type: String,
-      unique: true,
-    },
-    role: {
-      type: String,
-      enum: ["Admin", "Basic"],
-      default: "Basic",
-    },
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, "name is required"],
+    trim: true,
   },
-  { timestamps: true }
-);
-
-//Hashing Password Before Save
-userSchema.pre("save", async function (req, res, next) {
-  const salt = await bcrypt.genSalt(10);
-  this.hashedPassword = await bcrypt.hash(this.unHashedPassword, salt);
-  this.unHashedPassword = undefined;
-  next();
+  phone: {
+    type: Number,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: [true, "Password is required"],
+  },
+  email: {
+    type: String,
+    required: [true, "Email is required"],
+    unique: true,
+  },
+  otp: {
+    type: Number,
+  },
+  completeAddress: {
+    type: String,
+  },
+  role: {
+    type: String,
+    default: SENDER_ROLE,
+  },
+  subscription: {
+    type: String,
+  },
 });
 
-module.exports = new model("Users", userSchema);
+module.exports = model("UserModal", userSchema);

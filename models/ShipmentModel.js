@@ -1,94 +1,73 @@
 const { Schema, model } = require("mongoose");
+const { SHIPMENT_STATUSES } = require("../common/Constants");
 
 const shipmentSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "UserModal",
     },
-    sendername: {
-      type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-    sendernumber: {
-      type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-    senderemail: {
-      type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-    totalWeight: {
+    courierSize: {
       type: Number,
       required: true,
     },
-    state: {
+    deliveryProvience: {
       type: String,
-      required: [true, "Name of user is required"],
-      enum: ["1", "2", "3", "4", "5", "6", "7"],
+      required: true,
       trim: true,
     },
-    city: {
+    deliveryDistrict: {
       type: String,
-      required: [true, "Name of user is required"],
+      required: true,
       trim: true,
     },
-    tole: {
+    deliveryMunicipality: {
       type: String,
-      required: [true, "Name of user is required"],
+      required: true,
       trim: true,
     },
-    typeofparcel: {
+    deliveryTole: {
       type: String,
-      required: [true, "Name of user is required"],
+      required: true,
       trim: true,
     },
-    pickuptime: {
+    typeOfParcel: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    pickupTime: {
       type: String,
 
       trim: true,
     },
-    recievername: {
+    recieverName: {
       type: String,
-      required: [true, "Name of user is required"],
+      required: true,
       trim: true,
     },
 
-    recieveremail: {
+    recieverEmail: {
       type: String,
-      required: [true, "Name of user is required"],
+      required: true,
       trim: true,
     },
-    recievernumber: {
+    recieverPhone: {
       type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-
-    bstate: {
-      type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-    bcity: {
-      type: String,
-      required: [true, "Name of user is required"],
-      trim: true,
-    },
-    btole: {
-      type: String,
-      required: [true, "Name of user is required"],
+      required: true,
       trim: true,
     },
     status: {
       type: String,
       required: [true, "Status Of Product Is Required"],
       trim: true,
-      enum: ["pending", "delivered", "ontheway"],
-      default: "pending",
+      enum: [...SHIPMENT_STATUSES],
+      default: "Pending",
+    },
+    paymentMethod: {
+      type: String,
+      required: true,
+      trim: true,
     },
     isPaid: {
       type: Boolean,
@@ -98,4 +77,4 @@ const shipmentSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = new model("ShipmentDataModel", shipmentSchema);
+module.exports = new model("ShipmentModal", shipmentSchema);

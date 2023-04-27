@@ -1,33 +1,33 @@
 const router = require("express").Router();
 const axios = require("axios");
+const asyncHandler = require("../middlewares/asyncHandler");
 
-router.post("/payment/verify", (req, res) => {
-  //   console.log(req.body);
-  const { token, amount } = req.body;
-  //   console.log(token, amount);
-  let data = {
-    token: token,
-    amount: amount,
-  };
+router.post(
+  "/payment/verify",
+  asyncHandler((req, res) => {
+    //   console.log(req.body);
+    const { token, amount } = req.body;
+    console.log(token, amount);
+    let data = {
+      token: token,
+      amount: amount,
+    };
 
-  let config = {
-    headers: {
-      Authorization: "Key test_secret_key_31baef07122c4822a2823fd38678d0be",
-    },
-  };
+    let config = {
+      headers: {
+        Authorization: "Key test_secret_key_5ae0f6b24aa54f50aa96f09f547ddff8",
+      },
+    };
 
-  try {
     axios
       .post("https://khalti.com/api/v2/payment/verify/", data, config)
       .then((response) => {
-        console.log(response.data);
+        res.json({ success: true, message: response.data });
       })
       .catch((error) => {
-        console.log(error.message);
+        res.json({ success: false, message: error });
       });
-  } catch (error) {
-    console.log(error.message);
-  }
-});
+  })
+);
 
 module.exports = router;
